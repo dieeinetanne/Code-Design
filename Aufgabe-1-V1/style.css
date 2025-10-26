@@ -6,3 +6,8 @@ html, body {
 canvas {
   display: block;
 }
+
+.regler {
+  outline: none;
+  width: 50%;
+}
