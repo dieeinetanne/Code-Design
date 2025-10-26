@@ -3,7 +3,7 @@ let valueSlider;
 function setup() { 
   createCanvas(windowWidth, windowHeight);
   valueSlider = createSlider(-10, 38, 9);
-  valueSlider.position(10, 10);
+  valueSlider.position(50,50);
   valueSlider.class("regler");
 }
 
