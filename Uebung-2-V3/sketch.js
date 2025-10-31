@@ -6,8 +6,12 @@ function setup() {
   noStroke(); 
 }
 
+function preload() {
+  bild = loadImage('images/schoene-luftaufnahme-von-fronalpstock-bergen-in-der-schweiz-unter-dem-schoenen-rosa-und-blauen-himmel_181624-9315.jpg');
+}
+
 function draw() {
-  background(255,193,193,10);
+ image(bild,0,0,windowWidth,windowHeight);
 
   push();
   //Koordinatensystem in die Mitte des Canvas verschieben
