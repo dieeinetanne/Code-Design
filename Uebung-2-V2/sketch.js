@@ -1,38 +1,55 @@
 let cnv;
-let bursts = []; // transient click bursts
-const BLOCK_SIZE = 3; // size of each logical pixel block (3x3)
+let bursts = []; // vorübergehende Klickausbrüche
+const BLOCK_SIZE = 4; // Größe jedes logischen Pixelblocks (3x3)
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   cnv.position(0, 0);
   cnv.style('display', 'block');
-  pixelDensity(1); // keep pixel buffer size predictable
+  pixelDensity(1); // hält die Größe des Pixelpuffers vorhersehbar
   frameRate(10);
 }
 
-
+/**
+ * Zeichnet den aktuellen Frame der Animation.
+ * 
+ * Diese Funktion ist verantwortlich für die Darstellung der visuellen Repräsentation der Ausbrüche
+ * und deren Auswirkungen auf die Leinwand. Sie führt die folgenden Aufgaben aus:
+ * 
+ * 1. Lädt die aktuellen Pixel-Daten von der Leinwand.
+ * 2. Aktualisiert die Lebensdauer jedes Ausbruchs und entfernt abgelaufene.
+ * 3. Berechnet einen deterministischen Zeit-Seed basierend auf der aktuellen Frame-Anzahl.
+ * 4. Iteriert über die Leinwand in Schritten von BLOCK_SIZE und berechnet die 
+ *    Verschiebung, die durch Ausbrüche für das Zentrum jedes Blocks verursacht wird.
+ * 5. Probenahme des Rauschwerts an der verschobenen Position, um die Farbe 
+ *    des Blocks zu bestimmen.
+ * 6. Überprüft, ob ein Ausbruch einen Schwarzen-Loch-Effekt an der aktuellen Blockposition erzeugt, 
+ *    und überschreibt die Farbe gegebenenfalls.
+ * 7. Füllt den Block mit dem bestimmten Farbwert.
+ * 8. Aktualisiert die Pixel-Daten auf der Leinwand, um die Änderungen widerzuspiegeln.
+ */
 function draw() {
   loadPixels();
 
-  // evolve bursts (decrease life)
+  // entwickle Ausbrüche (Lebensdauer verringern)
   for (let i = bursts.length - 1; i >= 0; i--) {
     bursts[i].life--;
     if (bursts[i].life <= 0) bursts.splice(i, 1);
   }
 
-  // sample-time seed so the noise still flickers but deterministically per frame-slice
+  // sample-time seed, damit das Rauschen immer noch flackert, aber deterministisch pro Frame-Slice
   const timeSeed = Math.floor(frameCount / 2);
 
-  // iterate in BLOCK_SIZE steps and fill each block as a single "pixel"
+  // iteriere in BLOCK_SIZE-Schritten und fülle jeden Block als ein einzelnes "Pixel"
   for (let y = 0; y < height; y += BLOCK_SIZE) {
     for (let x = 0; x < width; x += BLOCK_SIZE) {
-      // use block center for displacement/noise sampling
+      // benutze Blockzentrum für Verschiebung/Rauschprobenahme
       let cx = x + Math.floor(BLOCK_SIZE / 2);
       let cy = y + Math.floor(BLOCK_SIZE / 2);
       if (cx >= width) cx = width - 1;
       if (cy >= height) cy = height - 1;
 
-      // compute total displacement caused by all bursts (pimples "jump away")
+      // berechne die gesamte Verschiebung, die durch alle Ausbrüche verursacht wird (Pickel "springen weg")
       let dispX = 0;
       let dispY = 0;
       for (let b of bursts) {
@@ -40,20 +57,20 @@ function draw() {
         let vy = cy - b.y;
         let d = Math.sqrt(vx * vx + vy * vy);
         if (d < b.radius && d > 0.001) {
-          // factor falls off with distance and with remaining life
+          // Faktor fällt mit der Entfernung und mit verbleibender Lebensdauer ab
           let fall = (1 - d / b.radius) * (b.life / b.maxLife);
-          // push away from the center
+          // weg vom Zentrum drücken
           let norm = fall * b.strength;
           dispX += (vx / d) * norm;
           dispY += (vy / d) * norm;
         }
       }
 
-      // sample position shifted by displacement (inverse mapping)
+      // Probenahme der Position verschoben durch Verschiebung (inverse Abbildung)
       let sx = Math.floor(cx - dispX);
       let sy = Math.floor(cy - dispY);
 
-      // keep sample inside canvas
+      // halte die Probe innerhalb der Leinwand
       if (sx < 0) sx = 0;
       if (sx >= width) sx = width - 1;
       if (sy < 0) sy = 0;
@@ -61,20 +78,20 @@ function draw() {
 
       let colorValue = deterministicNoise(sx, sy, timeSeed) < 0.5 ? 0 : 255;
 
-      // If any burst wants a black hole here, override to black (black area appears)
+      // Wenn ein Ausbruch hier ein Schwarzes Loch möchte, überschreibe auf schwarz (schwarzer Bereich erscheint)
       for (let b of bursts) {
         let dx = cx - b.x;
         let dy = cy - b.y;
         let dist = Math.sqrt(dx * dx + dy * dy);
-        // black area radius fades with life
+        // schwarzer Bereich Radius verblasst mit der Lebensdauer
         let blackRadius = b.radius * 2 * (b.life / b.maxLife);
         if (dist < blackRadius) {
-          colorValue = 0;
+          colorValue = 255;
           break;
         }
       }
 
-      // fill the BLOCK_SIZE x BLOCK_SIZE block
+      // fülle den BLOCK_SIZE x BLOCK_SIZE Block
       for (let by = 0; by < BLOCK_SIZE; by++) {
         let py = y + by;
         if (py >= height) continue;
@@ -83,8 +100,8 @@ function draw() {
           if (px >= width) continue;
           let index = (px + py * width) * 4;
           pixels[index] = colorValue;       // R
-          pixels[index + 1] = colorValue;   // G
-          pixels[index + 2] = colorValue;   // B
+          pixels[index + 5] = colorValue;   // G
+          pixels[index + 10] = colorValue;   // B
           pixels[index + 3] = 255;          // A
         }
       }
@@ -94,20 +111,20 @@ function draw() {
   updatePixels();
 }
 
-// create a burst on mouse click
+// erstelle einen Ausbruch bei Mausklick
 function mousePressed() {
-  const count = 50; // how many small bursts to create
+  const count = 50; // wie viele kleine Ausbrüche erstellt werden sollen
   for (let i = 0; i < count; i++) {
-    // random offset so they spread out around the click
+    // zufällige Verschiebung, damit sie sich um den Klick herum verteilen
     let angle = random(TWO_PI);
-    let dist = random(40, 40);
+    let dist = random(100, 100);
     let bx = constrain(mouseX + cos(angle) * dist, 0, width);
     let by = constrain(mouseY + sin(angle) * dist, 0, height);
 
     bursts.push({
       x: bx,
       y: by,
-      radius: min(width, height) * 0.05 * random(0.6, 1.4),
+      radius: min(width, height) * 0.05 * random(1, 1.4),
       strength: random(20, 60),
       life: 12,
       maxLife: 12
@@ -115,12 +132,12 @@ function mousePressed() {
   }
 }
 
-// deterministic hash-based noise in [0,1), stable for integer coordinates and time seed
+// deterministisches hash-basiertes Rauschen in [0,1), stabil für ganze Koordinaten und Zeit-Seed
 function deterministicNoise(x, y, t) {
-  // mix integers into a 32-bit-ish value
+  // mische ganze Zahlen in einen 32-Bit-ähnlichen Wert
   let n = x * 374761393 + y * 668265263 + t * 2147483647;
   n = (n << 13) ^ n;
-  // integer-like operations; use >>>0 to force uint32
+  // ganzzahlige Operationen; benutze >>>0, um uint32 zu erzwingen
   let nn = (n * (n * n * 15731 + 789221) + 1376312589) >>> 0;
   return (nn & 0x7fffffff) / 2147483648;
 }
@@ -128,4 +145,14 @@ function deterministicNoise(x, y, t) {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   cnv.position(0, 0);
+}
+
+// sample base noise and make more pixels white
+let base = deterministicNoise(sx, sy, timeSeed);
+let whiteThreshold = 0.35; // lower value => more white pixels (0..1)
+let colorValue = base < whiteThreshold ? 0 : 255;
+
+// extra deterministic white "sprinkles" (keeps it frame-stable)
+if (deterministicNoise(sx * 3 + 11, sy * 7 + 17, timeSeed + 3) > 0.8) {
+  colorValue = 255;
 }
