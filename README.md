@@ -13,3 +13,5 @@ Uebung 2, Version 4: https://dieeinetanne.github.io/Code-Design/Uebung-2-V4
 Uebung 2, Version 5: https://dieeinetanne.github.io/Code-Design/Uebung-2-V5
 
 Uebung 2, Version 6: https://dieeinetanne.github.io/Code-Design/Uebung-2-V6
+
+Aufgabe 2, Version 1: https://dieeinetanne.github.io/Code-Design/Aufgabe-2-V1
