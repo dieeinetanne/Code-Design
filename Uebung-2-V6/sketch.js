@@ -30,8 +30,12 @@ function draw() {
     //plan: y position ist abhängig von Distanz der maus zur mitte
     let distanz = dist(mouseX, mouseY, i * 200, height / 2);
     let yPos = map(distanz, 0, width, -300, 300);
-    ellipse(i * 200, height / 2 - yPos, 200, 200);
-    ellipse(i * 200, height / 2 + yPos, 200, 200);
+
+      //Die Mausdistanz bezieht den durchmesser der Ellipsen mit ein
+      //je näher desto größer  
+      let d = map(distanz, 0, width, 300, 50);
+      ellipse(i * 200, height / 2 - yPos, d, d);
   }
+
 }
 
