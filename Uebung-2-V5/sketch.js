@@ -27,7 +27,7 @@ for (let j = 0; j < 10; j++) {
 }*/
 
 
-
+/*
 
 //Slider für Hintergrundfarbe
 let sliderFarbe;
