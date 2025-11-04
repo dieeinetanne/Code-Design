@@ -1,11 +1,8 @@
-let durchmesser
-durchmesser = 10
 
 let valueSlider;
 
-let drehwinkel = 45;
-
-//zählt von 0 auf 100 und wieder zurück in einer Endlosschleife
+let drehwinkel = 0;
+let flipSpeed = 5;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -14,17 +11,10 @@ function setup() {
   angleMode(DEGREES);
   rectMode(CENTER);
   noStroke();
-
-
-  //zählt von 0 auf 100 und wieder zurück in einer Endlosschleife 
-  frameRate(30);
-
-  textSize(30);
-  textAlign(CENTER);
 }
 
 function draw() {
-
+//Slider
   let inputValue = valueSlider.value();
 
   let inputMin = -10;
@@ -34,59 +24,33 @@ function draw() {
   let outputMax = 255;
 
   background(0, 0, 0, 10);
-  let bgColor = map(inputValue, inputMin, inputMax, outputMin, outputMax);
-  background(bgColor, 161,208,164);
 
-
-  //rect1 blau mit transparenz abhängig vom sliderwert
-  push();
-  //Koordinatensystem in die Mitte des Canvas verschieben
+  //flipcard effect
   translate(width / 2, height / 2);
 
-  //rotation des rechtecks automatisch in einem Loop von 0 bis 100
-  rotate(-1 * drehwinkel);
+  let alpha = map(inputValue, inputMin, inputMax, outputMin, outputMax, 0, 255);
 
-  let alpha = map(inputValue, inputMin, inputMax, 0, 255);
-
-  //Transparenz abhängig vom Sliderwert
-  fill(191, 239, 255, alpha);
-  stroke(255);
-  strokeWeight(5);
-  rect(0, 0, 400, 400);
-  pop(); //Rotation und Translation zurücksetzen 
-
-
-
-  //rect2 pink mit transparenz abhängig vom sliderwert
+//Rotation und Zeichnen der Karte
   push();
-  //Koordinatensystem in die Mitte des Canvas verschieben
-  translate(width / 2, height / 2);
+  rotateY(drehwinkel);
 
-  //rotation des rechtecks automatisch in einem Loop von 0 bis 100
-  rotate(5 * drehwinkel);
-
-  //Transparenz abhängig vom Sliderwert
-  noFill();
-  stroke(230,45,167, alpha);
-  strokeWeight(5+inputValue);
-  rect(0, 0, 400, 400);
-  pop(); //Rotation und Translation zurücksetzen 
-
-  drehwinkel = drehwinkel + 1;
-
-  // Kreis in der Mitte zeichnen, ohne die globale Transformation dauerhaft zu verändern
-  push();
-  //Koordinatensystem in die Mitte des Canvas verschieben
-  translate(width / 2, height / 2);
-  fill(72,61,139-alpha);
-  circle(0,0,50);
+  // Bestimme, welche Seite basierend auf dem Winkel angezeigt werden soll
+  if ((drehwinkel % 360 >= 90 && drehwinkel % 360 < 270)) {
+    fill(255, 191, 239, alpha);
+  } else {
+    fill(191, 239, 255, alpha);
+  }
+  
+  // Zeichne die Karte mit perspektivischer Skalierung
+  let scaleX = abs(cos(drehwinkel));
+  rect(0, 0, 400 * scaleX, 400);
+  
   pop();
 
-
-  //textanzeige des frameCounts
-  const textColor = constrain(255 - bgColor, 0, 255);
-  fill(textColor);
-    textAlign(RIGHT);
-  //text des sliderwerts
-  text("Sliderwert: " + alpha, windowWidth - 20, 50);
+  // Flip frames
+  if (frameCount % 100 === 0) {
+    flipSpeed = -flipSpeed;
+  }
+  
+  drehwinkel = drehwinkel + flipSpeed;
 }
