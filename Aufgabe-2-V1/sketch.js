@@ -26,31 +26,23 @@ function draw() {
   background(0, 0, 0, 10);
 
   //flipcard effect
-  translate(width / 2, height / 2);
+  //translate(width / 2, height / 2);
 
-  let alpha = map(inputValue, inputMin, inputMax, outputMin, outputMax, 0, 255);
+  //let alpha = map(inputValue, inputMin, inputMax, outputMin, outputMax, 0, 255);
 
 //Rotation und Zeichnen der Karte
   push();
   rotateY(drehwinkel);
 
-  // Bestimme, welche Seite basierend auf dem Winkel angezeigt werden soll
-  if ((drehwinkel % 360 >= 90 && drehwinkel % 360 < 270)) {
-    fill(255, 191, 239, alpha);
-  } else {
-    fill(191, 239, 255, alpha);
   }
   
-  // Zeichne die Karte mit perspektivischer Skalierung
-  let scaleX = abs(cos(drehwinkel));
-  rect(0, 0, 400 * scaleX, 400);
   
   pop();
 
   // Flip frames
-  if (frameCount % 100 === 0) {
-    flipSpeed = -flipSpeed;
-  }
+  //if (frameCount % 100 === 0) {
+    //flipSpeed = -flipSpeed;
+  //}
   
   drehwinkel = drehwinkel + flipSpeed;
 }
