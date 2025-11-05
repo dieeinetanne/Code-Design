@@ -9,7 +9,7 @@ function setup() {
   valueSlider = createSlider(-10, 38, 9);
   valueSlider.position(width - valueSlider.width - 20, height - valueSlider.height - 20);
   angleMode(DEGREES);
-  rectMode(CENTER);
+  rectMode(CORNER);
   noStroke();
 }
 
@@ -25,24 +25,18 @@ function draw() {
 
   background(0, 0, 0, 10);
 
-  //flipcard effect
-  //translate(width / 2, height / 2);
 
-  //let alpha = map(inputValue, inputMin, inputMax, outputMin, outputMax, 0, 255);
+  let alpha = map(inputValue, inputMin, inputMax, outputMin, outputMax, 0, 255);
 
 //Rotation und Zeichnen der Karte
   push();
   rotateY(drehwinkel);
 
-  }
-  
+  rect(0, 0, 200, 400);
+  fill(191, 239, 255, alpha);
   
   pop();
 
-  // Flip frames
-  //if (frameCount % 100 === 0) {
-    //flipSpeed = -flipSpeed;
-  //}
-  
-  drehwinkel = drehwinkel + flipSpeed;
+
+  drehwinkel = drehwinkel + 1;
 }
