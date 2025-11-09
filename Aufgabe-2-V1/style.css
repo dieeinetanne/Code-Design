@@ -1,9 +1,202 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
+  @import url("https://use.typekit.net/pic0zpp.css");
 
-canvas {
-  display: block;
-}
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: "blithe", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    /*oktaeder über text */
+  }
+
+  h1 {
+    position: fixed;
+    top: 10%;
+    left: 0;
+    width: 100%;
+    color: grey;
+    font-size: 4vw;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation-name: h1-forward;
+    animation-fill-mode: forwards;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 1;
+
+  }
+
+  h2 {
+    position: fixed;
+    top: 30%;
+    left: 0;
+    width: 100%;
+    color: grey;
+    font-size: 4vw;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation-name: h2-reverse;
+    animation-duration: 17s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 1;
+  }
+
+  .reward {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    color: grey;
+    font-size: 4vw;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation-name: h2-reverse;
+    animation-duration: 17s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 1;
+  }
+
+    .reward2 {
+    position: fixed;
+    top: 60%;
+    left: 0;
+    width: 100%;
+    color: grey;
+    font-size: 4vw;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation-name: h2-reverse;
+    animation-duration: 17s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 1;
+  }
+
+    .reward3 {
+    position: fixed;
+    top: 80%;
+    left: 0;
+    width: 100%;
+    color: grey;
+    font-size: 4vw;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation-name: h2-reverse;
+    animation-duration: 17s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 1;
+  }
+
+  .foreward {
+    position: fixed;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    color: grey;
+    font-size: 4vw;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation-name: h1-forward;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 1;
+  }
+
+    .foreward2 {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    color: grey;
+    font-size: 4vw;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation-name: h1-forward;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 1;
+  }
+
+    .foreward3 {
+    position: fixed;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    color: grey;
+    font-size: 4vw;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation-name: h1-forward;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 1;
+  }
+
+  /*animation vom text*/
+  .marquee-track {
+    display: inline-block;
+    will-change: transform;
+  }
+
+  .marquee-track.forward {
+    animation-name: marquee-forward;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .marquee-track.reverse {
+    animation-name: marquee-reverse;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .marquee-copy {
+    display: inline-block;
+    padding-right: 2vw;
+    /* kleine Lücke zwischen den Wiederholungen */
+  }
+
+  @keyframes marquee-forward {
+    from {
+      transform: translateX(-50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes marquee-reverse {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
