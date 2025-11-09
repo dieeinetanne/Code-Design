@@ -37,7 +37,7 @@
     white-space: nowrap;
     z-index: 1;
     opacity: 0.5;
-        animation-duration: 25s;
+    animation-duration: 25s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
   }
@@ -57,12 +57,12 @@
     animation-name: h2-reverse;
   }
 
-    .reward2 {
+  .reward2 {
     top: 60%;
     animation-name: h2-reverse;
   }
 
-    .reward3 {
+  .reward3 {
     top: 80%;
     animation-name: h2-reverse;
   }
@@ -72,12 +72,12 @@
     animation-name: h1-forward;
   }
 
-    .foreward2 {
+  .foreward2 {
     top: 50%;
     animation-name: h1-forward;
   }
 
-    .foreward3 {
+  .foreward3 {
     top: 70%;
     animation-name: h1-forward;
   }
