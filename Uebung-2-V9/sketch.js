@@ -8,7 +8,7 @@ function setup() {
   valueSlider = createSlider(0, 100, 50); // 50 ist der Startwert des Sliders
   valueSlider.position(width - valueSlider.width - 400, height - valueSlider.height - 20);
   valueSlider.size(500); // Breite des Sliders
-//stellt den Slider über das 3D Canvas
+// stellt den Slider über das 3D Canvas
   valueSlider.style('z-index', '999');
   valueSlider.style('position', 'fixed');
   angleMode(DEGREES);
@@ -30,7 +30,6 @@ function draw() {
 
   // Animationsdauer basierend auf dem Schiebereglerwert
   // Je höher der Wert, desto kürzer die Dauer (schneller die Animation)
-  //Text  miteinbezogen
   let durationSec = map(inputValue, 0, 100, 30, 6);
 
   // Berechnet die Animationsdauer und rundet sie auf 2 Dezimalstellen
@@ -59,7 +58,7 @@ function draw() {
   drehwinkel += alpha * 0.1; // Geschwindigkeit der Drehung basierend auf dem Alphawert
 }
 
-//Oktaeder aus 8 Dreiecken
+// Oktaeder aus 8 Dreiecken
 function drawOctahedron(s) {
   const top = [0, -s, 0];
   const bottom = [0, s, 0];
@@ -87,11 +86,12 @@ function drawOctahedron(s) {
 
 // Erstellt für jede Textzeile eine Track-Struktur mit zwei Kopien für nahtlosen Loop
 function initMarquees() {
-  const forwardSelectors = ['h1', '.foreward, .foreward2, .foreward3'];
-  const reverseSelectors = ['h2', '.reward, .reward2, .reward3'];
+  //Vorwärts-/Rückwärts-Richtung
+  const forwardSelectors = ['h2', 'h1', '.foreward2', '.foreward3'];
+  const reverseSelectors = ['.foreward', '.reward', '.reward2', '.reward3'];
 
   const makeTrack = (el, dirClass) => {
-    if (el.querySelector('.marquee-track')) return; // schon initialisiert
+  if (el.querySelector('.marquee-track')) return; // schon initialisiert
 
     const text = el.textContent.trim();
     const track = document.createElement('span');

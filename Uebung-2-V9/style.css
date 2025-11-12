@@ -5,9 +5,9 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: "blithe", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+font-family: "futura-100-georgian", sans-serif;
+font-weight: 400;
+font-style: normal;
   }
 
   canvas {
@@ -16,7 +16,7 @@
     top: 0;
     left: 0;
     z-index: 5;
-    /*oktaeder über text */
+    /* oktaeder über text */
   }
 
   h1,
@@ -42,6 +42,20 @@
     animation-timing-function: linear;
   }
 
+
+  /* Schriftgewicht und Rendering für alle Marquee-Zeilen vereinheitlichen */
+  .foreward0,
+  .reward0,
+  .foreward,
+  .foreward2,
+  .foreward3,
+  .reward,
+  .reward2,
+  .reward3 {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
   h1 {
     top: 10%;
     animation-name: h1-forward;
@@ -95,6 +109,19 @@
   }
 
   .marquee-track.reverse {
+    animation-name: marquee-reverse;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  /* German alias classes so JS-assigned 'vorwärts'/'rückwärts' work */
+  .marquee-track.vorwärts {
+    animation-name: marquee-forward;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .marquee-track.rückwärts {
     animation-name: marquee-reverse;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
