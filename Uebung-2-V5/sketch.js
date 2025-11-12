@@ -1,11 +1,11 @@
-/*function setup() {
+function setup() {
   createCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
-  background(0);*/
+  background(0);
 
- /* for (let i = 0; i < 10; i++) {
+ for (let i = 0; i < 10; i++) {
     let x = i * 40 + 20; // Calculate x position
     fill(0); // Black fill
     stroke(255); // White stroke
@@ -24,7 +24,6 @@ for (let j = 0; j < 10; j++) {
    }
    ellipse(x, y, size);
  }
-}*/
 
 
 /*
@@ -105,4 +104,4 @@ for (let i = 0; i < 6; i++) {
 //Canvas an die Fenstergrösse anpassen
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-}
+}*/
