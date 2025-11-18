@@ -22,3 +22,5 @@ Uebung 2, Version 8: https://dieeinetanne.github.io/Code-Design/Uebung-2-V8
 Uebung 2, Version 9: https://dieeinetanne.github.io/Code-Design/Uebung-2-V9
 
 Uebung 2, Version 10: https://dieeinetanne.github.io/Code-Design/Uebung-2-V10
+
+Uebung 3, Version 2: https://dieeinetanne.github.io/Code-Design/Uebung-3-V2
